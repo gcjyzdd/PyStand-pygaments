@@ -271,44 +271,7 @@ int PyStand::RunString(const char *script)
 //---------------------------------------------------------------------
 int PyStand::DetectScript()
 {
-	// init: _script (init script like PyStand.int or PyStand.py)
-	int size = (int)_pystand.size() - 1;
-	for (; size >= 0; size--) {
-		if (_pystand[size] == L'.') break;
-	}
-	if (size < 0) size = (int)_pystand.size();
-	std::wstring main = _pystand.substr(0, size);
-	std::vector<const wchar_t*> exts;
-	std::vector<std::wstring> scripts;
-	_script.clear();
-#if !(PYSTAND_DISABLE_STATIC)
-	std::wstring test;
-	test = _home + L"\\" + Ansi2Unicode(PYSTAND_STATIC_NAME);
-	if (PathFileExistsW(test.c_str())) {
-		_script = test;
-	}
-#endif
-	if (_script.empty()) {
-		exts.push_back(L".int");
-		exts.push_back(L".py");
-		exts.push_back(L".pyw");
-		for (int i = 0; i < (int)exts.size(); i++) {
-			std::wstring test = main + exts[i];
-			scripts.push_back(test);
-			if (PathFileExistsW(test.c_str())) {
-				_script = test;
-				break;
-			}
-		}
-		if (_script.size() == 0) {
-			std::wstring msg = L"Can't find either of:\r\n";
-			for (int j = 0; j < (int)scripts.size(); j++) {
-				msg += scripts[j] + L"\r\n";
-			}
-			MessageBoxW(NULL, msg.c_str(), L"ERROR", MB_OK);
-			return -1;
-		}
-	}
+	_script = L"PyStand.int";
 	SetEnvironmentVariableW(L"PYSTAND_SCRIPT", _script.c_str());
 	return 0;
 }
