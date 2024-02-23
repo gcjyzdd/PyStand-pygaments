@@ -1,3 +1,36 @@
+# Standalone Pygments
+
+This project creates a standalone executable for [pygments](https://pygments.org/) in Windows.
+
+## Build
+
+1 Download a Windows embeddable package of Python from [the official website](https://www.python.org/downloads/).
+  Unzip the package and rename it to `runtime`.
+
+2 Create a new folder called `bin`. Move `runtime` under `bin`.
+
+3 Build PyStand:
+
+  ``` sh
+  cmake -S . -B build
+  cmake --build build --config Release
+  ```
+
+  Copy `PyStand.exe` and `PyStand.int` to `bin`.
+
+4 Copy the site-packages to `bin`.
+  Now the bin folder has the self-contained executable `PyStand.exe`, which will start `pygments`.
+
+## Usage
+
+``` sh
+pystand.exe --help
+```
+
+Below is README of the original fork:
+
+------
+
 # PyStand
 
 Python 独立部署环境。Python 3.5 以后，Windows 下面都有一个 Embedded Python 的独立 Python 运行环境，这个 PyStand 就是配合 Embedded Python 使用的。
